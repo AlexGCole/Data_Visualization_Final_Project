@@ -19,8 +19,8 @@ let categoryCountsArray = Object.entries(categoryCounts).map(([item, count]) => 
 categoryCountsArray.sort((a, b) => d3.ascending(a.item, b.item));
 
 // Set dimensions for the SVG container
-var width = 415;
-var height = 415;
+var width = 357;
+var height = 357;
 var radius = Math.min(width, height - 50) / 2;
 var margin = { top: 0, right: 20, bottom: 20, left: 20 }; // Add margin values
 
@@ -80,7 +80,11 @@ let pieNoHover = (event, d) => {
 
 
 // Define color scale
-var color = "#C1E1A7";
+    // Define color scale
+    var color = d3.scaleOrdinal()
+        .domain(categoryCountsArray.map(d => d.item))
+        .range(["#9ACBED", "#7DB7DD", "#5FA2D0", "#4B8FC2", "#346EAD"]); // Add or modify colors as needed
+    var pieGraphStroke = "#151929"
 
 // Create a pie chart
 var pie = d3.pie();
@@ -97,7 +101,7 @@ var arcs = svg.selectAll("arc")
 // Fill arcs with colors
 arcs.append("path")
     .attr("d", arc)
-    .attr("stroke", "#1F2833")
+    .attr("stroke", pieGraphStroke)
     .style("stroke-width", "4px")
     .attr("fill", color)
     .on("mouseover", pieHover)
@@ -114,8 +118,7 @@ arcs.append("text")
     .text(function (d) {
         var percentage = ((d.endAngle - d.startAngle) / (2 * Math.PI)) * 100;
         return percentage.toFixed(1) + "%";
-    });
-
-
+    })
+    .style("font-size", "18px");
 
 }

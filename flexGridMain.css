@@ -24,7 +24,8 @@ body {
   padding: 5px;
   background-color: var(--box-dark);
   color: var(--background-light);
-  font-size: 30px;
+  font-size: 50px;
+
 }
 
 .left-column {
@@ -37,12 +38,14 @@ body {
   padding: 5px;
   grid-column: 2 / 3; /* Span the middle column */
   grid-row: 2 / -1; /* Span the remaining rows */
+
 }
 
 .right-container {
   display: grid;
   grid-template-rows: 1fr 1fr; /* Divide the right container into two rows */
   grid-gap: 5px;
+
 }
 
 .right-box-top,
@@ -52,6 +55,7 @@ body {
   display: flex; /* Use flexbox */
   justify-content: center; /* Center content horizontally */
   align-items: center; /* Center content vertically */
+
 }
 
 .two-row-container {
@@ -71,8 +75,35 @@ body {
   justify-content: center; /* Center vertically */
   align-items: center; /* Center horizontally */
   font-size: 20px;
+
 }
 
 .top {
-  color:white
+  color:white;
+  font-size: 30px;
+
+}
+
+.shadow-container-bar-graph {
+  width: 1000px; /* Adjust width as needed */
+  height: 50px; /* Adjust height as needed */
+  background-color: #1C2438;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Adding a subtle shadow */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white; /* Text color */
+
+}
+
+.shadow-container-pie-graph {
+  width: 250px; /* Adjust width as needed */
+  height: 50px; /* Adjust height as needed */
+  background-color: #1C2438;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Adding a subtle shadow */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white; /* Text color */
+  font-size: 20px;
 }

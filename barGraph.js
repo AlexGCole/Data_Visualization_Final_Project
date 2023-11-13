@@ -2,9 +2,9 @@
     function updateBarVisualization(data) {
 
     // Define the SVG dimensions and margins outside the function
-    var margin = { top: 50, right: 0, bottom: 50, left: 30 },
+    var margin = { top: 5, right: 50, bottom: 50, left: 70 },
         width = 1100 - margin.left - margin.right,
-        height = 800;
+        height = 700;
 
     // Clear existing SVG content
     d3.select("#bar-graph svg").remove();
@@ -19,8 +19,8 @@
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     
         //Pre-defined colors
-        var origcolor = "#148D8D"
-        var changeColor = "#6BAED6"; // Light gray color
+        var origcolor = "#74A5D9"
+        var changeColor = "#AEDFF7"; // Light gray color
     
         //Create tooltip for hover
         var tooltip = d3.select("#bar-graph")

@@ -19,8 +19,8 @@ let paymentMethodCountsArray = Object.entries(paymentMethodCounts).map(([item, c
 paymentMethodCountsArray.sort((a, b) => d3.ascending(a.item, b.item));
 
 // Set dimensions for the SVG container
-var width = 415;
-var height = 415;
+var width = 357;
+var height = 357;
 var radius = Math.min(width, height - 50) / 2;
 var margin = { top: 0, right: 20, bottom: 20, left: 20 }; // Add margin values
 
@@ -77,9 +77,11 @@ let pieNoHover = (event, d) => {
       .style("fill", null); // Reset to the default font color
   };
 
-
-// Define color scale
-const color = "#EFBC75";
+  //Define colors
+    var color = d3.scaleOrdinal()
+            .domain(paymentMethodCountsArray.map(d => d.item))
+            .range(["#6ED4D2", "#5CBFC0", "#4AA9AF", "#39949F", "#2A7E8F", "#1C6980"]); // Shades of orange
+    var pieGraphStroke = "#151929"
 
 // Create a pie chart
 var pie = d3.pie();
@@ -96,7 +98,7 @@ var arcs = svg.selectAll("arc")
 // Fill arcs with colors
 arcs.append("path")
     .attr("d", arc)
-    .attr("stroke", "#1F2833")
+    .attr("stroke", pieGraphStroke)
     .style("stroke-width", "4px")
     .attr("fill", color)
     .on("mouseover", pieHover)
@@ -113,7 +115,8 @@ arcs.append("text")
     .text(function (d) {
         var percentage = ((d.endAngle - d.startAngle) / (2 * Math.PI)) * 100;
         return percentage.toFixed(1) + "%";
-    });
+    })
+    .style("font-size", "18px");
 
 
 
