@@ -119,6 +119,7 @@ arcs.append("text")
         var percentage = ((d.endAngle - d.startAngle) / (2 * Math.PI)) * 100;
         return percentage.toFixed(1) + "%";
     })
-    .style("font-size", "18px");
+    .style("font-size", "16px")
+    .style("fill", "white")
 
 }

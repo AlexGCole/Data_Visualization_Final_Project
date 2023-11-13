@@ -1,7 +1,7 @@
 import './barGraph.js';
 import './pieGraph.js';
 
-//URL for Shopping Trends dataset
+// URL for Shopping Trends dataset
 const csvURL = "https://gist.githubusercontent.com/AlexGCole/8f7f7a222f3b47b9f62196e06e5cec42/raw/shopping_trends.csv";
 
 // Initial visualization with all data
@@ -14,6 +14,9 @@ d3.csv(csvURL).then((csvData) => {
   const shippingTypeSelector = document.getElementById('shippingType');
   const frequencyofPurchasesSelector = document.getElementById('frequencyofPurchases');
   const seasonSelector = document.getElementById('season');
+  const stateSelector = document.getElementById('states');
+  const purchaseAmountHigh = document.getElementById('purchaseAmountHigh');
+  const purchaseAmountLow = document.getElementById('purchaseAmountLow');
   
   // Function to handle the value change event and return the input value
   function handleValueChange(event) {
@@ -29,17 +32,24 @@ d3.csv(csvURL).then((csvData) => {
     const selectedShipping = shippingTypeSelector.value;
     const selectedPurchase = frequencyofPurchasesSelector.value;
     const selectedSeason = seasonSelector.value;
-  
+    const selectedState = stateSelector.value;
+    const selectedPurchaseAmountLow = handleValueChange({ target: purchaseAmountLow });
+    const selectedPurchaseAmountHigh = handleValueChange({ target: purchaseAmountHigh });
+
     // Filter the dataset based on the Age and Gender columns
     let filteredData;
 
-      // If a specific gender is selected, apply age filters along with gender filter
-      filteredData = csvData.filter((row) => row.Age >= ageValueLow && row.Age <= ageValueHigh &&
+    // If a specific gender is selected, apply age filters along with gender filter
+    filteredData = csvData.filter((row) => row.Age >= ageValueLow && row.Age <= ageValueHigh &&
       (selectedGender === 'All' || row.Gender === selectedGender) &&
       (selectedShipping === 'All' || row.ShippingType === selectedShipping) &&
       (selectedPurchase === 'All' || row.FrequencyofPurchases === selectedPurchase) &&
-      (selectedSeason === 'All' || row.Season === selectedSeason))
-  
+      (selectedSeason === 'All' || row.Season === selectedSeason) &&
+      (selectedState === 'All' || row.Location === selectedState) &&
+      (isNaN(selectedPurchaseAmountLow) || row.PurchaseAmount >= selectedPurchaseAmountLow) &&
+      (isNaN(selectedPurchaseAmountHigh) || row.PurchaseAmount <= selectedPurchaseAmountHigh));
+      
+
     // Log or do something with the filtered data
     updateBarVisualization(filteredData);
     updatePieVizualization(filteredData);
@@ -50,11 +60,13 @@ d3.csv(csvURL).then((csvData) => {
   ageValueLowButton.addEventListener('input', filterAndAppendDataFrames);
   ageValueHighButton.addEventListener('input', filterAndAppendDataFrames);
   genderSelector.addEventListener('input', filterAndAppendDataFrames);
-  shippingType.addEventListener('input', filterAndAppendDataFrames);
-  frequencyofPurchases.addEventListener('input', filterAndAppendDataFrames);
-  season.addEventListener('input', filterAndAppendDataFrames);
+  shippingTypeSelector.addEventListener('input', filterAndAppendDataFrames);
+  frequencyofPurchasesSelector.addEventListener('input', filterAndAppendDataFrames);
+  seasonSelector.addEventListener('input', filterAndAppendDataFrames);
+  stateSelector.addEventListener('input', filterAndAppendDataFrames);
+  purchaseAmountLow.addEventListener('input', filterAndAppendDataFrames);
+  purchaseAmountHigh.addEventListener('input', filterAndAppendDataFrames);
 
   // Call the function to trigger the initial visualization
   filterAndAppendDataFrames();
-
 });
