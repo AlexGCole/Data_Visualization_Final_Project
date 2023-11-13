@@ -1,0 +1,78 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Define color variables */
+:root {
+  --background-light: #f2f2f2; /* Light gray background */
+  --box-dark: #757575; /* Dark gray color */
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 4fr 2fr; /* 1 part for the left, 4 parts for the middle, 2 parts for the right */
+  grid-template-rows: auto 1fr; /* Auto for the title, 1 part for the rest */
+  gap: 5px; /* Adjust the gap as needed */
+  height: auto; /* Adjust the height as needed */
+  padding: 5px; /* Add padding around the entire grid container */
+}
+
+.title {
+  grid-column: 1 / -1; /* Span across all columns */
+  text-align: center;
+  padding: 5px;
+  background-color: var(--box-dark);
+  color: var(--background-light);
+  font-size: 30px;
+}
+
+.left-column {
+  background-color: var(--background-light);
+  padding: 0px;
+}
+
+.middle-box {
+  background-color: var(--box-dark);
+  padding: 5px;
+  grid-column: 2 / 3; /* Span the middle column */
+  grid-row: 2 / -1; /* Span the remaining rows */
+}
+
+.right-container {
+  display: grid;
+  grid-template-rows: 1fr 1fr; /* Divide the right container into two rows */
+  grid-gap: 5px;
+}
+
+.right-box-top,
+.right-box-bottom {
+  background-color: var(--box-dark);
+  padding: 5px;
+  display: flex; /* Use flexbox */
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+}
+
+.two-row-container {
+  display: grid;
+  grid-template-rows: 50px auto; /* Divide the right container into two rows */
+  text-align: center;
+  background-color: var(--background-light);
+  height: 100%; /* Ensure the container fills the height of the parent */
+}
+
+.top,
+.bottom {
+  background-color: var(--box-dark);
+  height: 100%; /* Ensure the box fills the height of the container */
+  display: flex;
+  flex-direction: rows;
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  font-size: 20px;
+}
+
+.top {
+  color:white
+}

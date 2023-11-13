@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="flexGridMain.css" />
+    <link rel="stylesheet" href="flexGridButtons.css" />
+    <script src="https://unpkg.com/d3@7.8.5/dist/d3.min.js"></script>
+    <title></title>
+  </head>
+
+  <body>
+    <script type="module" src="eventListener.js"></script>
+    <!-- Main grid container -->
+    <div class="grid-container">
+      <div class="title">Consumer Shopping Trends</div>
+      <div class="left-column">
+        <!-- Sub grid container -->
+        <div class="grid-container-buttons">
+          <div class="container-buttons">
+            <div class="box-top">
+              <label>Age Range</label>
+            </div>
+            <div class="box-bottom">
+              <input
+                type="number"
+                min="18"
+                max="100"
+                step="1"
+                value="18"
+                id="ageValueLow"
+              />
+              <label> - </label>
+              <input
+                type="number"
+                min="1"
+                max="70"
+                step="1"
+                value="70"
+                id="ageValueHigh"
+              />
+            </div>
+          </div>
+          <div class="container-buttons">
+            <div class="box-top">
+              <label>Gender</label>
+            </div>
+            <div class="box-bottom">
+              <select id="gender">
+                <option value="All">All</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+          </div>
+          <div class="container-buttons">
+            <div class="box-top">Shipping Type</div>
+            <div class="box-bottom">
+              <select id="shippingType">
+                <option value="All">All</option>
+                <option value="Express">Express</option>
+                <option value="Next Day Air">Next Day Air</option>
+                <option value="2-Day Shipping">2-Day Shipping</option>
+                <option value="Standard">Standard</option>
+                <option value="Free Shipping">Free Shipping</option>
+                <option value="Store Pickup">Store Pickup</option>
+              </select>
+            </div>
+          </div>
+          <div class="container-buttons">
+            <div class="box-top">Frequency of Purchases</div>
+            <div class="box-bottom">
+              <select id="frequencyofPurchases">
+                <option value="All">All</option>
+                <option value="Annually">Annually</option>
+                <option value="Quarterly">Quarterly</option>
+                <option value="Every 3 Months">Every 3 Months</option>
+                <option value="Monthly">Monthly</option>
+                <option value="Bi-Weekly">Bi-Weekly</option>
+                <option value="Weekly">Weekly</option>
+                <option value="Fortnightly">Fortnightly</option>
+              </select>
+            </div>
+          </div>
+          <div class="container-buttons">
+            <div class="box-top">Season</div>
+            <div class="box-bottom">
+              <select id="season">
+                <option value="All">All</option>
+                <option value="Winter">Winter</option>
+                <option value="Spring">Spring</option>
+                <option value="Summer">Summer</option>
+                <option value="Fall">Fall</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="middle-box">
+        <div class="two-row-container">
+          <div class="top">Items Purchased</div>
+          <div class="bottom" id="bar-graph">
+            <script type="text/javascript" src="barGraph.js"></script>
+          </div>
+        </div>
+      </div>
+      <div class="right-container">
+        <div class="right-box-top">
+          <div class="two-row-container">
+            <div class="top">Categories</div>
+            <div class="bottom" id="pie-graph">
+              <script type="text/javascript" src="pieGraph.js"></script>
+            </div>
+          </div>
+        </div>
+        <div class="right-box-bottom">
+          <div class="two-row-container">
+            <div class="top">Payment Methods</div>
+            <div class="bottom" id="pie-graph-payment">
+              <script type="text/javascript" src="pieGraphPayment.js"></script>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
