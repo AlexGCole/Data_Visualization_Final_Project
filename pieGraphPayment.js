@@ -13,8 +13,9 @@ data.forEach((row) => {
 });
 
 // Convert the object to an array of objects for easier manipulation
-let paymentMethodCountsArray = Object.entries(paymentMethodCounts).map(([item, count]) => ({ item, count }));
-console.log(paymentMethodCountsArray.item)
+let paymentMethodCountsArray = Object.entries(paymentMethodCounts).map(([item, count], index) => ({ item, count, index }));
+
+
 // Sort the array based on the item names
 paymentMethodCountsArray.sort((a, b) => d3.ascending(a.item, b.item));
 
@@ -45,15 +46,23 @@ var tooltip = d3.select("#pie-graph-payment")
     .style("border-radius", "5px")
     .style("padding", "5px")
 
-// Hover on function
-let pieHover = (event, d) => {
-    d3.select(event.target).attr("fill", "#ffffff"); // Adjust color as needed
-    tooltip.style("visibility", "visible")
-      .style("opacity", 1)
-      .html(d.data.count)
-      .style("left", (event.pageX + 20) + "px")
-      .style("top", (event.pageY - 20) + "px");
-}
+    let pieHover = (event, d) => {
+        const hoveredElement = d3.select(event.target);
+    
+        // Change the color of the path element (pie slice)
+        hoveredElement.attr("fill", "#ffffff");
+    
+        // Change the font color of the sibling text element
+        d3.select(event.target.parentNode)
+        .select("text")
+        .style("fill", "black");
+    
+        tooltip.style("visibility", "visible")
+            .style("opacity", 1)
+            .html(d.data.count)
+            .style("left", (event.pageX + 20) + "px")
+            .style("top", (event.pageY - 20) + "px");
+    };
 
 
 
@@ -61,25 +70,24 @@ let pieHover = (event, d) => {
 var mousemove = function(event, d) {
     // Find the corresponding category for the hovered arc
     var hoveredPaymentMethod = paymentMethodCountsArray.find(category => category.count === d.value);
+
     tooltip
         .html(hoveredPaymentMethod.item + ": " + d.value)
         .style("left", (event.pageX + 20) + "px")
-        .style("top", (event.pageY - 20) + "px");
+        .style("top", (event.pageY - 20) + "px")
 }
 
 // Hover off function
-let pieNoHover = (event, d) => {
-    d3.select(event.target).attr("fill", color); // Restore original color
+let pieNoHover = (event) => {
+    d3.select(event.target).attr("fill", color);
+    d3.select(event.target.parentNode).select("text").style("fill", "white")
     tooltip.style("visibility", "hidden").style("opacity", 0);
   
-    // Reset the font color of the text element
-    d3.select(event.target.parentNode).select("text")
-      .style("fill", null); // Reset to the default font color
   };
 
   //Define colors
     var color = d3.scaleOrdinal()
-            .domain(paymentMethodCountsArray.map(d => console.log(d.item)))
+            .domain(paymentMethodCountsArray.map(d => d.item))
             .range(["#6ED4D2", "#5CBFC0", "#4AA9AF", "#39949F", "#2A7E8F", "#1C6980"]); // Shades of orange
     var pieGraphStroke = "#151929"
 
@@ -118,7 +126,5 @@ arcs.append("text")
     })
     .style("font-size", "16px")
     .style("fill", "white")
-
-
 
 }

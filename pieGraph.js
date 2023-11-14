@@ -22,7 +22,7 @@ categoryCountsArray.sort((a, b) => d3.ascending(a.item, b.item));
 var width = 357;
 var height = 357;
 var radius = Math.min(width, height - 50) / 2;
-var margin = { top: 0, right: 20, bottom: 20, left: 20 }; // Add margin values
+var margin = { top: 0, right: 20, bottom: 20, left: 20 };
 
 // Create an SVG container
 var svg = d3.select("#pie-graph")
@@ -30,7 +30,7 @@ var svg = d3.select("#pie-graph")
     .attr("width", width)
     .attr("height", height)
     .append("g")
-    .attr("transform", "translate(" + (width / 2) + "," + (height / 2 + margin.top) + ")"); // Center the pie chart with top margin
+    .attr("transform", "translate(" + (width / 2) + "," + (height / 2 + margin.top) + ")"); 
 
 //Create tooltip for hover
 var tooltip = d3.select("#pie-graph")
@@ -47,19 +47,23 @@ var tooltip = d3.select("#pie-graph")
 
 // Hover on function
 let pieHover = (event, d) => {
-    d3.select(event.target).attr("fill", "#ffffff"); // Adjust color as needed
+    d3.select(event.target).attr("fill", "#ffffff");
     tooltip.style("visibility", "visible")
       .style("opacity", 1)
       .html(d.data.count)
       .style("left", (event.pageX + 20) + "px")
       .style("top", (event.pageY - 20) + "px");
+
+    // Change the font color of the sibling text element
+    d3.select(event.target.parentNode)
+            .select("text")
+            .style("fill", "black");
 }
 
 
 
 // Capture when the mouse moves
 var mousemove = function(event, d) {
-    // Find the corresponding category for the hovered arc
     var hoveredCategory = categoryCountsArray.find(category => category.count === d.value);
     
     tooltip
@@ -70,25 +74,23 @@ var mousemove = function(event, d) {
 
 // Hover off function
 let pieNoHover = (event, d) => {
-    d3.select(event.target).attr("fill", color); // Restore original color
+    d3.select(event.target).attr("fill", color);
     tooltip.style("visibility", "hidden").style("opacity", 0);
   
-    // Reset the font color of the text element
     d3.select(event.target.parentNode).select("text")
-      .style("fill", null); // Reset to the default font color
+      .style("fill", "white");
   };
 
 
 // Define color scale
-    // Define color scale
     var color = d3.scaleOrdinal()
         .domain(categoryCountsArray.map(d => d.item))
-        .range(["#9ACBED", "#7DB7DD", "#5FA2D0", "#4B8FC2", "#346EAD"]); // Add or modify colors as needed
+        .range(["#9ACBED", "#7DB7DD", "#5FA2D0", "#4B8FC2", "#346EAD"]);
     var pieGraphStroke = "#151929"
 
 // Create a pie chart
 var pie = d3.pie();
-var arc = d3.arc().innerRadius(0).outerRadius(radius);
+var arc = d3.arc().innerRadius(75).outerRadius(radius);
 
 
 // Create arcs and fill with data
