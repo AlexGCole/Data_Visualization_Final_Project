@@ -54,6 +54,7 @@ d3.csv(csvURL).then((csvData) => {
     updateBarVisualization(filteredData);
     updatePieVizualization(filteredData);
     updatePiePaymentVizualization(filteredData);
+    console.log(filteredData)
   }
 
   // Add event listeners to the buttons

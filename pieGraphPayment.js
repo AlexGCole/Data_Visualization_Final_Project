@@ -14,7 +14,7 @@ data.forEach((row) => {
 
 // Convert the object to an array of objects for easier manipulation
 let paymentMethodCountsArray = Object.entries(paymentMethodCounts).map(([item, count]) => ({ item, count }));
-
+console.log(paymentMethodCountsArray.item)
 // Sort the array based on the item names
 paymentMethodCountsArray.sort((a, b) => d3.ascending(a.item, b.item));
 
@@ -79,7 +79,7 @@ let pieNoHover = (event, d) => {
 
   //Define colors
     var color = d3.scaleOrdinal()
-            .domain(paymentMethodCountsArray.map(d => d.item))
+            .domain(paymentMethodCountsArray.map(d => console.log(d.item)))
             .range(["#6ED4D2", "#5CBFC0", "#4AA9AF", "#39949F", "#2A7E8F", "#1C6980"]); // Shades of orange
     var pieGraphStroke = "#151929"
 
