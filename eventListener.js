@@ -36,10 +36,9 @@ d3.csv(csvURL).then((csvData) => {
     const selectedPurchaseAmountLow = handleValueChange({ target: purchaseAmountLow });
     const selectedPurchaseAmountHigh = handleValueChange({ target: purchaseAmountHigh });
 
-    // Filter the dataset based on the Age and Gender columns
+    // Filter data based on button values
     let filteredData;
 
-    // If a specific gender is selected, apply age filters along with gender filter
     filteredData = csvData.filter((row) => row.Age >= ageValueLow && row.Age <= ageValueHigh &&
       (selectedGender === 'All' || row.Gender === selectedGender) &&
       (selectedShipping === 'All' || row.ShippingType === selectedShipping) &&
@@ -50,11 +49,11 @@ d3.csv(csvURL).then((csvData) => {
       (isNaN(selectedPurchaseAmountHigh) || row.PurchaseAmount <= selectedPurchaseAmountHigh));
       
 
-    // Log or do something with the filtered data
+    //Update the visualizations with the filtered data
     updateBarVisualization(filteredData);
     updatePieVizualization(filteredData);
     updatePiePaymentVizualization(filteredData);
-    console.log(filteredData)
+    
   }
 
   // Add event listeners to the buttons

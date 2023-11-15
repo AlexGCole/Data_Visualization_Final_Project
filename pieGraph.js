@@ -6,7 +6,6 @@ d3.select("#pie-graph svg").remove();
 //Count ItemsPurchased variable for bar values
 let categoryCounts = {};
 
-// Assuming the column containing items is named "ItemPurchased"
 data.forEach((row) => {
     const categoryName = row.Category;
     categoryCounts[categoryName] = (categoryCounts[categoryName] || 0) + 1;
@@ -45,7 +44,7 @@ var tooltip = d3.select("#pie-graph")
     .style("border-radius", "5px")
     .style("padding", "5px")
 
-// Hover on function
+//Capture when the mouse hovers
 let pieHover = (event, d) => {
     d3.select(event.target).attr("fill", "#ffffff");
     tooltip.style("visibility", "visible")
@@ -74,7 +73,7 @@ var mousemove = function(event, d) {
 
 // Hover off function
 let pieNoHover = (event, d) => {
-    d3.select(event.target).attr("fill", color);
+    d3.select(event.target).attr("fill", pieColor);
     tooltip.style("visibility", "hidden").style("opacity", 0);
   
     d3.select(event.target.parentNode).select("text")
@@ -82,8 +81,8 @@ let pieNoHover = (event, d) => {
   };
 
 
-// Define color scale
-    var color = d3.scaleOrdinal()
+//Pre-defined colors
+    var pieColor = d3.scaleOrdinal()
         .domain(categoryCountsArray.map(d => d.item))
         .range(["#9ACBED", "#7DB7DD", "#5FA2D0", "#4B8FC2", "#346EAD"]);
     var pieGraphStroke = "#151929"
@@ -105,7 +104,7 @@ arcs.append("path")
     .attr("d", arc)
     .attr("stroke", pieGraphStroke)
     .style("stroke-width", "4px")
-    .attr("fill", color)
+    .attr("fill", pieColor)
     .on("mouseover", pieHover)
     .on("mousemove", mousemove)
     .on("mouseout", pieNoHover);

@@ -9,7 +9,7 @@
     // Clear existing SVG content
     d3.select("#bar-graph svg").remove();
 
-    // Append the SVG element once
+    // Append the SVG
     var svg = d3
         .select("#bar-graph")
         .append("svg")
@@ -22,7 +22,7 @@
         var origcolor = "#74A5D9"
         var changeColor = "#AEDFF7"; // Light gray color
     
-        //Create tooltip for hover
+        //Create tooltip
         var tooltip = d3.select("#bar-graph")
         .append("div")
             .style("position", "absolute")
@@ -35,7 +35,7 @@
             .style("border-radius", "5px")
             .style("padding", "5px")
     
-        //Hover on function
+        // Capture when the mouse hovers
         let barHover = e => {
     
             let hbar = d3.select(e.srcElement)
@@ -67,7 +67,6 @@
         //Count ItemsPurchased variable for bar values
         let itemCounts = {};
 
-        // Assuming the column containing items is named "ItemPurchased"
         data.forEach((row) => {
             const itemName = row.ItemPurchased;
             itemCounts[itemName] = (itemCounts[itemName] || 0) + 1;
@@ -89,16 +88,14 @@ svg.append("g")
     .attr("transform", "translate(0," + height + ")")
     .call(d3.axisBottom(x))
     .selectAll("path, line")
-    .style("fill", "none") // Remove fill for lines
-    .style("stroke", "white"); // Change the color of lines to white
+    .style("fill", "none")
+    .style("stroke", "white");
 
 svg.selectAll(".tick text")
-    .style("fill", "white") // Change the color of tick text to white
-    .attr("transform", "translate(-10,15)rotate(-45)"); // Tilt the x-axis labels
+    .style("fill", "white")
+    .attr("transform", "translate(-10,15)rotate(-45)");
 
 // Add Y axis
-var yAxisScale = 1.25
-
 var y = d3.scaleLinear()
     .domain([0, 180])
     .range([height, 0]);
@@ -124,7 +121,6 @@ svg.selectAll("mybar")
     .on("mouseover", barHover)
     .on("mousemove", mousemove)
     .on("mouseout", barNoHover);
-        
         
 
     
