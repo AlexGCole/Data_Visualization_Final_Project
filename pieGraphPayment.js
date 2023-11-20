@@ -1,8 +1,5 @@
 function updatePiePaymentVizualization (data) {
 
-// Clear existing SVG content
-d3.select("#pie-graph-payment svg").remove();
-
 //Count ItemsPurchased variable for bar values
 let paymentMethodCounts = {};
 
@@ -22,7 +19,16 @@ paymentMethodCountsArray.sort((a, b) => d3.ascending(a.item, b.item));
 var width = 357;
 var height = 357;
 var radius = Math.min(width, height - 50) / 2;
-var margin = { top: 0, right: 20, bottom: 20, left: 20 }; // Add margin values
+var margin = { top: 0, right: 20, bottom: 20, left: 20 };
+
+//Pre-defined colors
+var pieColor = d3.scaleOrdinal()
+        .domain(paymentMethodCountsArray.map(d => d.item))
+        .range(["#6ED4D2", "#5CBFC0", "#4AA9AF", "#39949F", "#2A7E8F", "#1C6980"]); // Shades of orange
+var pieGraphStroke = "#151929"
+
+// Clear existing SVG content
+d3.select("#pie-graph-payment svg").remove();
 
 // Create an SVG container
 var svg = d3.select("#pie-graph-payment")
@@ -30,9 +36,9 @@ var svg = d3.select("#pie-graph-payment")
     .attr("width", width)
     .attr("height", height)
     .append("g")
-    .attr("transform", "translate(" + (width / 2) + "," + (height / 2 + margin.top) + ")"); // Center the pie chart with top margin
+    .attr("transform", "translate(" + (width / 2) + "," + (height / 2 + margin.top) + ")");
 
-//Create tooltip for hover
+//Create tooltip
 var tooltip = d3.select("#pie-graph-payment")
 .append("div")
     .style("position", "absolute")
@@ -45,53 +51,39 @@ var tooltip = d3.select("#pie-graph-payment")
     .style("border-radius", "5px")
     .style("padding", "5px")
     
-    //Capture when the mouse hovers
-    let pieHover = (event, d) => {
-        const hoveredElement = d3.select(event.target);
-    
-        // Change the color of pie slice
-        hoveredElement.attr("fill", "#ffffff");
-    
-        // Change the font color of the sibling text element
-        d3.select(event.target.parentNode)
-        .select("text")
-        .style("fill", "black");
-        
-        //Change visibility
-        tooltip.style("visibility", "visible")
-            .style("opacity", 1)
-            .html(d.data.count)
-            .style("left", (event.pageX + 20) + "px")
-            .style("top", (event.pageY - 20) + "px");
-    };
+//Capture when the mouse hovers
+let pieHover = (event, d) => {
+    d3.select(event.target).attr("fill", "#ffffff");
+    tooltip.style("visibility", "visible")
+      .style("opacity", 1)
+      .html(d.count)
+      .style("left", (event.pageX + 20) + "px")
+      .style("top", (event.pageY - 20) + "px");
 
-
+    // Change the font color of the sibling text element
+    d3.select(event.target.parentNode)
+            .select("text")
+            .style("fill", "black");
+};
 
 // Capture when the mouse moves
 var mousemove = function(event, d) {
-    // Find the corresponding category for the hovered arc
     var hoveredPaymentMethod = paymentMethodCountsArray.find(category => category.count === d.value);
     
-    //Change tooltip
     tooltip
         .html(hoveredPaymentMethod.item + ": " + d.value)
         .style("left", (event.pageX + 20) + "px")
         .style("top", (event.pageY - 20) + "px")
 }
 
-// Hover off function
+//Capture when the mouse stops hovering
 let pieNoHover = (event) => {
     d3.select(event.target).attr("fill", pieColor);
-    d3.select(event.target.parentNode).select("text").style("fill", "white")
     tooltip.style("visibility", "hidden").style("opacity", 0);
   
+    d3.select(event.target.parentNode).select("text")
+      .style("fill", "white");
   };
-
-  //Pre-defined colors
-    var pieColor = d3.scaleOrdinal()
-            .domain(paymentMethodCountsArray.map(d => d.item))
-            .range(["#6ED4D2", "#5CBFC0", "#4AA9AF", "#39949F", "#2A7E8F", "#1C6980"]); // Shades of orange
-    var pieGraphStroke = "#151929"
 
 // Create a pie chart
 var pie = d3.pie();

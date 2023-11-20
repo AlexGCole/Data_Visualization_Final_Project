@@ -1,3 +1,4 @@
+/* Main Body containers */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -107,6 +108,7 @@ body {
   font-size: 20px;
 }
 
+/* Button containers */
 :root {
   --background-light: #f2f2f2; 
   --box-dark: #151929; 

@@ -1,83 +1,84 @@
 
-    function updateBarVisualization(data) {
+function updateBarVisualization(data) {
 
-    // Define the SVG dimensions and margins outside the function
-    var margin = { top: 5, right: 50, bottom: 50, left: 70 },
-        width = 1100 - margin.left - margin.right,
-        height = 700;
+// Set dimensions for the SVG container
+var margin = { top: 5, right: 50, bottom: 50, left: 70 },
+    width = 1100 - margin.left - margin.right,
+    height = 700;
 
-    // Clear existing SVG content
-    d3.select("#bar-graph svg").remove();
+//Pre-defined colors
+var origcolor = "#74A5D9"
+var changeColor = "#AEDFF7"; // Light gray color
 
-    // Append the SVG
-    var svg = d3
-        .select("#bar-graph")
-        .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    
-        //Pre-defined colors
-        var origcolor = "#74A5D9"
-        var changeColor = "#AEDFF7"; // Light gray color
-    
-        //Create tooltip
-        var tooltip = d3.select("#bar-graph")
-        .append("div")
-            .style("position", "absolute")
-            .style("visibility", "hidden")
-            .style("opacity", 0)
-            .attr("class", "tooltip")
-            .style("background-color", "white")
-            .style("border", "solid")
-            .style("border-width", "2px")
-            .style("border-radius", "5px")
-            .style("padding", "5px")
-    
-        // Capture when the mouse hovers
-        let barHover = e => {
-    
-            let hbar = d3.select(e.srcElement)
-            hbar.attr("fill", changeColor)
-            tooltip.style("visibility", "visible")
-                .style("opacity", 1)
-                .style("stroke", "black")
-                .style("opacity", 1)
-    
-        }
-    
-        // Capture when the mouse moves
-        var mousemove = function(event, d) {
-            tooltip
-            .html(d.item + ": " + d.count)
-            .style("left", (event.pageX + 20) + "px")
-            .style("top", (event.pageY - 20) + "px");
-        }
-        
-        //Hover off function
-        let barNoHover = e => {
-            d3.select(e.srcElement).transition().attr("fill",origcolor)
-            tooltip.style("visibility", "hidden")
-                .style("opacity", 0)
-                .style("stroke", "none")
-                .style("opacity", 0.8)
-        }
-    
-        //Count ItemsPurchased variable for bar values
-        let itemCounts = {};
+// Clear existing SVG content to render changes dynamically
+d3.select("#bar-graph svg").remove();
 
-        data.forEach((row) => {
-            const itemName = row.ItemPurchased;
-            itemCounts[itemName] = (itemCounts[itemName] || 0) + 1;
-        });
+// Create an SVG container
+var svg = d3
+    .select("#bar-graph")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+//Create tooltip
+var tooltip = d3.select("#bar-graph")
+.append("div")
+    .style("position", "absolute")
+    .style("visibility", "hidden")
+    .style("opacity", 0)
+    .attr("class", "tooltip")
+    .style("background-color", "white")
+    .style("border", "solid")
+    .style("border-width", "2px")
+    .style("border-radius", "5px")
+    .style("padding", "5px")
+
+// Capture when the mouse hovers
+let barHover = e => {
+
+    let hbar = d3.select(e.srcElement)
+    hbar.attr("fill", changeColor)
+    tooltip.style("visibility", "visible")
+        .style("opacity", 1)
+        .style("stroke", "black")
+        .style("opacity", 1)
+
+}
+
+// Capture when the mouse moves
+var mousemove = function(event, d) {
+    tooltip
+    .html(d.item + ": " + d.count)
+    .style("left", (event.pageX + 20) + "px")
+    .style("top", (event.pageY - 20) + "px");
+}
+
+//Capture when the mouse stops hovering
+let barNoHover = e => {
+    d3.select(e.srcElement).transition().attr("fill",origcolor)
+    tooltip.style("visibility", "hidden")
+        .style("opacity", 0)
+        .style("stroke", "none")
+        .style("opacity", 0.8)
+}
+
+//Count ItemsPurchased variable for bar values
+let itemCounts = {};
+
+data.forEach((row) => {
+    const itemName = row.ItemPurchased;
+    itemCounts[itemName] = (itemCounts[itemName] || 0) + 1;
     
-        // Convert the object to an array of objects for easier manipulation
-        let itemCountsArray = Object.entries(itemCounts).map(([item, count]) => ({ item, count }));
-    
-        // Sort the array based on the item names
-        itemCountsArray.sort((a, b) => d3.ascending(a.item, b.item));
-        
+});
+
+// Convert the object to an array of objects for easier manipulation
+let itemCountsArray = Object.entries(itemCounts).map(([item, count]) => ({ item, count }));
+
+// Sort the array based on the item names
+itemCountsArray.sort((a, b) => d3.ascending(a.item, b.item));
+
 // X axis
 var x = d3.scaleBand()
     .range([0, width])

@@ -1,8 +1,5 @@
 function updatePieVizualization (data) {
 
-// Clear existing SVG content
-d3.select("#pie-graph svg").remove();
-
 //Count ItemsPurchased variable for bar values
 let categoryCounts = {};
 
@@ -23,15 +20,25 @@ var height = 357;
 var radius = Math.min(width, height - 50) / 2;
 var margin = { top: 0, right: 20, bottom: 20, left: 20 };
 
+//Pre-defined colors
+var pieColor = d3.scaleOrdinal()
+.domain(categoryCountsArray.map(d => d.item))
+.range(["#9ACBED", "#7DB7DD", "#5FA2D0", "#4B8FC2", "#346EAD"]);
+var pieGraphStroke = "#151929"
+
+// Clear existing SVG content to render changes dynamically
+d3.select("#pie-graph svg").remove();
+
 // Create an SVG container
-var svg = d3.select("#pie-graph")
+var svg = d3
+    .select("#pie-graph")
     .append("svg")
     .attr("width", width)
     .attr("height", height)
     .append("g")
     .attr("transform", "translate(" + (width / 2) + "," + (height / 2 + margin.top) + ")"); 
-
-//Create tooltip for hover
+    
+//Create tooltip
 var tooltip = d3.select("#pie-graph")
 .append("div")
     .style("position", "absolute")
@@ -49,7 +56,7 @@ let pieHover = (event, d) => {
     d3.select(event.target).attr("fill", "#ffffff");
     tooltip.style("visibility", "visible")
       .style("opacity", 1)
-      .html(d.data.count)
+      .html(d.count)
       .style("left", (event.pageX + 20) + "px")
       .style("top", (event.pageY - 20) + "px");
 
@@ -58,8 +65,6 @@ let pieHover = (event, d) => {
             .select("text")
             .style("fill", "black");
 }
-
-
 
 // Capture when the mouse moves
 var mousemove = function(event, d) {
@@ -71,7 +76,7 @@ var mousemove = function(event, d) {
         .style("top", (event.pageY - 20) + "px");
 }
 
-// Hover off function
+//Capture when the mouse stops hovering
 let pieNoHover = (event, d) => {
     d3.select(event.target).attr("fill", pieColor);
     tooltip.style("visibility", "hidden").style("opacity", 0);
@@ -79,13 +84,6 @@ let pieNoHover = (event, d) => {
     d3.select(event.target.parentNode).select("text")
       .style("fill", "white");
   };
-
-
-//Pre-defined colors
-    var pieColor = d3.scaleOrdinal()
-        .domain(categoryCountsArray.map(d => d.item))
-        .range(["#9ACBED", "#7DB7DD", "#5FA2D0", "#4B8FC2", "#346EAD"]);
-    var pieGraphStroke = "#151929"
 
 // Create a pie chart
 var pie = d3.pie();
