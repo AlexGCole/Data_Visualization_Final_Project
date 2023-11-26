@@ -1,5 +1,6 @@
 import './barGraph.js';
-import './pieGraph.js';
+import './pieGraphCategories.js';
+import './pieGraphPayment.js';
 
 // URL for Shopping Trends dataset
 const csvURL = "https://gist.githubusercontent.com/AlexGCole/8f7f7a222f3b47b9f62196e06e5cec42/raw/shopping_trends.csv";
@@ -51,7 +52,7 @@ filteredData = csvData.filter((row) => row.Age >= ageValueLow && row.Age <= ageV
 
 //Update the visualizations with the filtered data
 updateBarVisualization(filteredData);
-updatePieVizualization(filteredData);
+updatePieCategoriesVizualization(filteredData);
 updatePiePaymentVizualization(filteredData);
   
 }

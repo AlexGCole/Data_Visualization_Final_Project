@@ -1,4 +1,4 @@
-function updatePieVizualization (data) {
+function updatePieCategoriesVizualization (data) {
 
 //Count ItemsPurchased variable for bar values
 let categoryCounts = {};
@@ -8,7 +8,7 @@ data.forEach((row) => {
     categoryCounts[categoryName] = (categoryCounts[categoryName] || 0) + 1;
 });
 
-// Convert the object to an array of objects for easier manipulation
+// Convert the object to an array of objects
 let categoryCountsArray = Object.entries(categoryCounts).map(([item, count]) => ({ item, count }));
 
 // Sort the array based on the item names
@@ -21,9 +21,10 @@ var radius = Math.min(width, height - 50) / 2;
 var margin = { top: 0, right: 20, bottom: 20, left: 20 };
 
 //Pre-defined colors
-var pieColor = d3.scaleOrdinal()
-.domain(categoryCountsArray.map(d => d.item))
-.range(["#9ACBED", "#7DB7DD", "#5FA2D0", "#4B8FC2", "#346EAD"]);
+var pieColor = d3
+    .scaleOrdinal()
+    .domain(categoryCountsArray.map(d => d.item))
+    .range(["#9ACBED", "#7DB7DD", "#5FA2D0", "#4B8FC2", "#346EAD"]);
 var pieGraphStroke = "#151929"
 
 // Clear existing SVG content to render changes dynamically
@@ -39,8 +40,9 @@ var svg = d3
     .attr("transform", "translate(" + (width / 2) + "," + (height / 2 + margin.top) + ")"); 
     
 //Create tooltip
-var tooltip = d3.select("#pie-graph")
-.append("div")
+var tooltip = d3
+    .select("#pie-graph")
+    .append("div")
     .style("position", "absolute")
     .style("visibility", "hidden")
     .style("opacity", 0)
@@ -53,17 +55,21 @@ var tooltip = d3.select("#pie-graph")
 
 //Capture when the mouse hovers
 let pieHover = (event, d) => {
-    d3.select(event.target).attr("fill", "#ffffff");
-    tooltip.style("visibility", "visible")
-      .style("opacity", 1)
-      .html(d.count)
-      .style("left", (event.pageX + 20) + "px")
-      .style("top", (event.pageY - 20) + "px");
+    d3
+    .select(event.target)
+    .attr("fill", "#ffffff");
+    tooltip
+    .style("visibility", "visible")
+    .style("opacity", 1)
+    .html(d.count)
+    .style("left", (event.pageX + 20) + "px")
+    .style("top", (event.pageY - 20) + "px");
 
     // Change the font color of the sibling text element
-    d3.select(event.target.parentNode)
-            .select("text")
-            .style("fill", "black");
+    d3
+    .select(event.target.parentNode)
+    .select("text")
+    .style("fill", "black");
 }
 
 // Capture when the mouse moves
@@ -71,18 +77,24 @@ var mousemove = function(event, d) {
     var hoveredCategory = categoryCountsArray.find(category => category.count === d.value);
     
     tooltip
-        .html(hoveredCategory.item + ": " + d.value)
-        .style("left", (event.pageX + 20) + "px")
-        .style("top", (event.pageY - 20) + "px");
+    .html(hoveredCategory.item + ": " + d.value)
+    .style("left", (event.pageX + 20) + "px")
+    .style("top", (event.pageY - 20) + "px");
 }
 
 //Capture when the mouse stops hovering
 let pieNoHover = (event, d) => {
-    d3.select(event.target).attr("fill", pieColor);
-    tooltip.style("visibility", "hidden").style("opacity", 0);
+    d3
+    .select(event.target)
+    .attr("fill", pieColor);
+    tooltip
+    .style("visibility", "hidden")
+    .style("opacity", 0);
   
-    d3.select(event.target.parentNode).select("text")
-      .style("fill", "white");
+    d3
+    .select(event.target.parentNode)
+    .select("text")
+    .style("fill", "white");
   };
 
 // Create a pie chart
@@ -91,7 +103,8 @@ var arc = d3.arc().innerRadius(75).outerRadius(radius);
 
 
 // Create arcs and fill with data
-var arcs = svg.selectAll("arc")
+var arcs = svg
+    .selectAll("arc")
     .data(pie(categoryCountsArray.map(function(d) { return d.count; })))
     .enter()
     .append("g")
