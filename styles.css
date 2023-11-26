@@ -110,8 +110,8 @@ body {
 
 /* Button containers */
 :root {
-  --background-light: #f2f2f2; 
-  --box-dark: #151929; 
+  --button-background-light: #f2f2f2; 
+  --button-box-dark: #151929; 
 }
 
 .grid-container-buttons {
@@ -126,13 +126,13 @@ body {
   display: grid;
   grid-template-rows: 1r auto;
   text-align: center;
-  background-color: var(--background-light);
+  background-color: var(--button-background-light);
   height: 100%;
 }
 
 .box-top,
 .box-bottom {
-  background-color: var(--box-dark);
+  background-color: var(--button-box-dark);
   height: 100%; 
   display: flex;
   flex-direction: row;
