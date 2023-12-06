@@ -6,7 +6,9 @@ body {
 
 :root {
   --background-light: #f2f2f2; 
-  --box-dark: #757575; 
+  --box-light: #757575;
+  --box-dark: #151929;  
+  --floating-container: #1C2438;
 }
 
 .grid-container {
@@ -87,7 +89,7 @@ body {
 .shadow-container-bar-graph {
   width: 1000px;
   height: 50px; 
-  background-color: #1C2438;
+  background-color: var(--floating-container);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
@@ -99,19 +101,13 @@ body {
 .shadow-container-pie-graph {
   width: 250px; 
   height: 50px; 
-  background-color: #1C2438;
+  background-color: var(--floating-container);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   color: white; 
   font-size: 20px;
-}
-
-/* Button containers */
-:root {
-  --button-background-light: #f2f2f2; 
-  --button-box-dark: #151929; 
 }
 
 .grid-container-buttons {
@@ -126,13 +122,13 @@ body {
   display: grid;
   grid-template-rows: 1r auto;
   text-align: center;
-  background-color: var(--button-background-light);
+  background-color: var(--box-dark);
   height: 100%;
 }
 
 .box-top,
 .box-bottom {
-  background-color: var(--button-box-dark);
+  background-color: var(--box-dark);
   height: 100%; 
   display: flex;
   flex-direction: row;
@@ -152,7 +148,7 @@ body {
 .shadow-container-buttons {
   width: 250px;
   height: 50px;
-  background-color: #1C2438;
+  background-color: var(--floating-container);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
